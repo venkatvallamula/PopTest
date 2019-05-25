@@ -10,9 +10,9 @@ class AndroidViewModel: ViewModel() {
 
     private val mService  =  RetrofitService()
 
-    fun getAndroidData() : MutableLiveData<List<Model>>? {
-
-        return mService.loadAndroidData()
+    fun getData() : MutableLiveData<List<Model>>? {
+        return mService.loadData()
     }
+    var isLoading = mService.progress
 
 }

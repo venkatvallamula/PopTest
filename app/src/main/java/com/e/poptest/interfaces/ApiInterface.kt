@@ -7,6 +7,6 @@ import retrofit2.http.GET
 interface ApiInterface {
 
     @GET("repos")
-    fun getAndroid(): Call<List<Model>>
+    fun getData(): Call<List<Model>>
 
 }

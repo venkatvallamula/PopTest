@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.e.poptest.DataModel.Model
 import com.e.poptest.ViewModels.AndroidViewModel
@@ -33,7 +34,10 @@ class MainActivity : AppCompatActivity() {
 
 
         val mAndroidViewModel = ViewModelProviders.of(this@MainActivity).get(AndroidViewModel::class.java)
-        mAndroidViewModel.getAndroidData()?.observe(this, Observer<List<Model>> { androidList ->
+        mAndroidViewModel.isLoading.observe(this, Observer {
+            it?.let { showLoadingDialog(it) }
+        })
+        mAndroidViewModel.getData()?.observe(this, Observer<List<Model>> { androidList ->
 
             Log.e("list",androidList?.size.toString())
             recyclerView.adapter = PopAdapter(this@MainActivity, androidList as ArrayList<Model>, object :
@@ -44,6 +48,9 @@ class MainActivity : AppCompatActivity() {
             })
         })
 
+    }
+    private fun showLoadingDialog(show: Boolean) {
+        if (show) progressBar.visibility = View.VISIBLE else progressBar.visibility = View.GONE
     }
 }
 
